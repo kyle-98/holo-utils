@@ -12,7 +12,7 @@
 		"sources": "https://github.com/kyle-98/inventory-search"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/inventory-search/icon.png",
+	"icon": "assets/holo-utils/icon.png",
 	"environment": "client",
 	"entrypoints": {
 		"client": [

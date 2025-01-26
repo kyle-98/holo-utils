@@ -12,7 +12,8 @@
 		"AbstractBlockMixin",
 		"LivingEntityRendererMixin",
 		"EntityRendererMixin",
-		"MinecraftClientMixin"
+		"MinecraftClientMixin",
+		"WorldRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

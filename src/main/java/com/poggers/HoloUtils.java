@@ -46,7 +46,7 @@ import org.lwjgl.glfw.GLFW;
 public class HoloUtils implements ClientModInitializer, ModMenuApi {
 	public static TextFieldWidget searchBox;
 	private static ConfigHolder<ModConfig> configHolder;
-	private ModConfig config;
+	public ModConfig config;
 	private static String savedSearchText;
 
 	private static boolean isFullbrightEnabled = false;
@@ -102,7 +102,7 @@ public class HoloUtils implements ClientModInitializer, ModMenuApi {
 
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while(CYCLE_FOG_KEYBIND.wasPressed()) {
-				ModConfig.cycleFogOptions(); 
+				config.cycleFogOptions(); 
 			}
 
 			while(FULLBRIGHT_KEYBIND.wasPressed()){ 
@@ -124,12 +124,12 @@ public class HoloUtils implements ClientModInitializer, ModMenuApi {
 					NotifyPlayer.displayMessage("Xray ON", true);
 					isFullbrightEnabled = true;
 					gamma.setValue(15.0);
-					ModConfig.visualSettings.setAllFogState(FogRemoval.EVERYWHERE);
+					config.visualSettings.setAllFogState(FogRemoval.EVERYWHERE);
 				} else {
 					NotifyPlayer.displayMessage("Xray OFF", true);
 					isFullbrightEnabled = false;
 					gamma.setValue(1.0);
-					ModConfig.visualSettings.setAllFogState(FogRemoval.DISABLED);
+					config.visualSettings.setAllFogState(FogRemoval.DISABLED);
 				}
 				XrayUtils.setXrayState(!XrayUtils.getXrayState());
 			}

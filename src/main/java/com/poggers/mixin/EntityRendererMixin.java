@@ -14,6 +14,10 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import com.poggers.config.ModConfig;
+
+import me.shedaniel.autoconfig.AutoConfig;
+
 @Mixin(EntityRenderer.class)
 public class EntityRendererMixin
 {
@@ -26,14 +30,32 @@ public class EntityRendererMixin
         }
     }
 
-    //  to override whether the entities name tag should be rendered.
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/EntityRenderer;hasLabel(Lnet/minecraft/entity/Entity;)Z"))
     public boolean renderNameTag(EntityRenderer renderer, Entity entity) {
+        ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
         if(entity instanceof ClientPlayerEntity || entity instanceof OtherClientPlayerEntity) {
-            return true;
+            if (config.espSettings.shouldRenderEspFriend(entity.getName().getLiteralString())){
+                return true;
+            } else {
+                if(entity instanceof ClientPlayerEntity){
+                    return false;
+                } else {
+                    return true;
+                }
+            }
         } else {
             return false;
         }
+    }
+
+    @Redirect(method = "renderLabelIfPresent", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;isSneaky()Z"))
+    private boolean redirectIsSneaky(Entity entity) {
+        ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+        if(config.espSettings.shouldRenderEspFriend(entity.getName().getLiteralString()))
+        {
+            return false;
+        }
+        return entity.isSneaky();
     }
 
 }

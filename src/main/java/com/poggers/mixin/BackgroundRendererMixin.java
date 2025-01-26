@@ -14,17 +14,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.poggers.config.ModConfig;
 import com.poggers.config.ModConfig.FogRemoval;
 
+import me.shedaniel.autoconfig.AutoConfig;
+
 @Mixin(BackgroundRenderer.class)
 public class BackgroundRendererMixin {
     @Inject(method = "applyFog", at = @At(value = "HEAD"), cancellable = true)
     private static void applyCustomFog(Camera camera, BackgroundRenderer.FogType fogType, float viewDistance, boolean thickFog, float density, CallbackInfo ci) {
         MinecraftClient client = MinecraftClient.getInstance();
         ClientWorld world = client.world;
-
-        if(ModConfig.visualSettings.getAllFogState() == FogRemoval.EVERYWHERE) {
+        ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+        if(config.visualSettings.getAllFogState() == FogRemoval.EVERYWHERE) {
             ci.cancel();
         }
-        else if(ModConfig.visualSettings.getAllFogState() == FogRemoval.NETHER_ONLY && world != null && world.getRegistryKey() == World.NETHER){
+        else if(config.visualSettings.getAllFogState() == FogRemoval.NETHER_ONLY && world != null && world.getRegistryKey() == World.NETHER){
             ci.cancel();
         }
     }

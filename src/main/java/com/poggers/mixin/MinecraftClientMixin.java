@@ -9,6 +9,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import com.poggers.config.ModConfig;
+import com.poggers.config.ModConfig.EspSettings.Friend;
+
+import me.shedaniel.autoconfig.AutoConfig;
+
 @Mixin(MinecraftClient.class)
 public class MinecraftClientMixin
 {
@@ -17,7 +22,13 @@ public class MinecraftClientMixin
 	public void overrideHasOutline(Entity entity, CallbackInfoReturnable<Boolean> cir)
 	{
 		if(entity instanceof ClientPlayerEntity || entity instanceof OtherClientPlayerEntity) {
-			cir.setReturnValue(true);
+			ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+			Friend eF = config.espSettings.getEspFriendByName(entity.getName().getLiteralString());
+			if(eF != null && eF.enabled){
+				cir.setReturnValue(true);;
+			} else{
+				cir.setReturnValue(false);
+			}
 		}
 	}
 }

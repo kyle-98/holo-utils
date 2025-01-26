@@ -5,9 +5,15 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.OtherClientPlayerEntity;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.entity.Entity;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
+
+import com.poggers.config.ModConfig;
+import com.poggers.config.ModConfig.EspSettings.Friend;
+
+import me.shedaniel.autoconfig.AutoConfig;
 
 @Mixin(LivingEntityRenderer.class)
 public class LivingEntityRendererMixin
@@ -16,9 +22,16 @@ public class LivingEntityRendererMixin
 	public boolean forceHighlight(MinecraftClient client, Entity entity)
 	{
 		if(entity instanceof ClientPlayerEntity || entity instanceof OtherClientPlayerEntity) {
-            return true;
+			ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+			Friend eF = config.espSettings.getEspFriendByName(entity.getName().getLiteralString());
+			if(eF != null && eF.enabled) {
+				return true;
+			} else {
+				return false;
+			}
         } else {
             return client.hasOutline(entity);
         }
 	}
+	
 }

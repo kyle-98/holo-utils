@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.poggers.utils.NotifyPlayer;
-import com.poggers.utils.ReloadWorld;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
@@ -54,7 +53,7 @@ public class ModConfig implements ConfigData {
 
     @Category("visualSettings")
     @TransitiveObject
-    public static VisualSettings visualSettings = new VisualSettings();    
+    public VisualSettings visualSettings = new VisualSettings();    
     public static class VisualSettings {
         @ConfigEntry.Gui.EnumHandler(option= ConfigEntry.Gui.EnumHandler.EnumDisplayOption.DROPDOWN)
         private FogRemoval removeFogEverywhere = FogRemoval.DISABLED;
@@ -68,10 +67,45 @@ public class ModConfig implements ConfigData {
         }
     }
 
+    @Category("esp")
+    @TransitiveObject
+    public EspSettings espSettings = new EspSettings();
+    public static class EspSettings {
+        public static class Friend {
+            public String name = "";
+            public String color = "#FFFFFF";
+            public boolean enabled = false;
+        }
+        
+        private List<Friend> espFriends = new ArrayList<>();
+
+        public List<Friend> getEspFriends(){
+            return this.espFriends;
+        }
+
+        public Friend getEspFriendByName(String name) {
+            for (Friend f : this.espFriends){
+                if (f.name.equals(name)) {
+                    return f;
+                }
+            }
+            return null;
+        }
+
+        public boolean shouldRenderEspFriend(String name) {
+            for (Friend f : this.espFriends){
+                if (f.name.equals(name) && f.enabled) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
     @Category("xray")
     @TransitiveObject
-    public static XraySettings xraySettings = new XraySettings();
-    public static class XraySettings {
+    public XraySettings xraySettings = new XraySettings();
+    public class XraySettings {
         @ConfigEntry.Gui.Tooltip
         private List<String> stringBlocks = new ArrayList<String>() {{
             add("COAL_ORE");
@@ -119,19 +153,19 @@ public class ModConfig implements ConfigData {
         }
     }
 
-    public static void cycleFogOptions(){
-        switch(ModConfig.visualSettings.getAllFogState()) {
+    public void cycleFogOptions(){
+        switch(this.visualSettings.getAllFogState()) {
             case DISABLED:
                 NotifyPlayer.displayMessage("Disabling Fog Everywhere", true);
-                ModConfig.visualSettings.setAllFogState(FogRemoval.EVERYWHERE);
+                this.visualSettings.setAllFogState(FogRemoval.EVERYWHERE);
                 break;
             case EVERYWHERE:
                 NotifyPlayer.displayMessage("Disabling Fog in Nether Only", true);
-                ModConfig.visualSettings.setAllFogState(FogRemoval.NETHER_ONLY);
+                this.visualSettings.setAllFogState(FogRemoval.NETHER_ONLY);
                 break;
             case NETHER_ONLY:
                 NotifyPlayer.displayMessage("Enabling Fog", true);
-                ModConfig.visualSettings.setAllFogState(FogRemoval.DISABLED);
+                this.visualSettings.setAllFogState(FogRemoval.DISABLED);
                 break;
         }
         AutoConfig.getConfigHolder(ModConfig.class).save();

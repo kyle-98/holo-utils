@@ -13,6 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.poggers.config.ModConfig;
 import com.poggers.utils.XrayUtils;
 
+import me.shedaniel.autoconfig.AutoConfig;
+
 @Mixin(value = Block.class)
 public class BlockMixin {
     @Inject(at = @At("HEAD"), method = "shouldDrawSide(" + "Lnet/minecraft/block/BlockState;" + 
@@ -23,8 +25,9 @@ public class BlockMixin {
             ")Z",
             cancellable = true)
     private static void shouldDrawSide(BlockState state, BlockView reader, BlockPos pos, Direction face, BlockPos blockPos, CallbackInfoReturnable<Boolean> ci) {
+        ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
         if(XrayUtils.getXrayState()){
-            if (ModConfig.xraySettings.getXrayBlocks().contains(state.getBlock())) {
+            if (config.xraySettings.getXrayBlocks().contains(state.getBlock())) {
                 ci.setReturnValue(true);
             } else {
                 ci.setReturnValue(false);
