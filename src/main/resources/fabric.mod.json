@@ -1,0 +1,35 @@
+{
+	"schemaVersion": 1,
+	"id": "holo-utils",
+	"version": "${version}",
+	"name": "Holo Utils",
+	"description": "Good utilities",
+	"authors": [
+		"FaunaFan1274832"
+	],
+	"contact": {
+		"homepage": "https://github.com/kyle-98",
+		"sources": "https://github.com/kyle-98/inventory-search"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/inventory-search/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"com.poggers.HoloUtils"
+		],
+		"modmenu": [
+			"com.poggers.config.ModMenuIntegration"
+		]
+	},
+	"mixins": [
+		"holo-utils.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.9",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*",
+		"cloth-config": ">=15.0.140"
+	}
+}
