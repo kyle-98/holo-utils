@@ -58,12 +58,23 @@ public class ModConfig implements ConfigData {
         @ConfigEntry.Gui.EnumHandler(option= ConfigEntry.Gui.EnumHandler.EnumDisplayOption.DROPDOWN)
         private FogRemoval removeFogEverywhere = FogRemoval.DISABLED;
 
+        private boolean fullbrightEnabled = false;
+
         public FogRemoval getAllFogState() {
             return this.removeFogEverywhere;
         }
 
         public void setAllFogState(FogRemoval state) {
             this.removeFogEverywhere = state;
+        }
+
+        public boolean getFullbrightState() {
+            return this.fullbrightEnabled;
+        }
+
+        public void setFullbrightState(boolean state) {
+            this.fullbrightEnabled = state;
+            AutoConfig.getConfigHolder(ModConfig.class).save();
         }
     }
 

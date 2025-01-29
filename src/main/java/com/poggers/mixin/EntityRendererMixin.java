@@ -21,6 +21,7 @@ import me.shedaniel.autoconfig.AutoConfig;
 @Mixin(EntityRenderer.class)
 public class EntityRendererMixin
 {
+    @SuppressWarnings("unused")
     private Entity currentEntity;
 
     @Inject(method = "renderLabelIfPresent", at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
@@ -30,6 +31,7 @@ public class EntityRendererMixin
         }
     }
 
+    @SuppressWarnings("rawtypes")
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/EntityRenderer;hasLabel(Lnet/minecraft/entity/Entity;)Z"))
     public boolean renderNameTag(EntityRenderer renderer, Entity entity) {
         ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();

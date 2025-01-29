@@ -5,7 +5,6 @@ import com.poggers.utils.NotifyPlayer;
 import com.poggers.utils.XrayUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.poggers.config.ModConfig;
-import com.poggers.config.ModConfig.FogRemoval;
 import com.poggers.mixin.HandledScreenAccessor;
 import com.poggers.mixin.ScreenAccessor;
 import com.terraformersmc.modmenu.api.ModMenuApi;
@@ -49,7 +48,7 @@ public class HoloUtils implements ClientModInitializer, ModMenuApi {
 	public ModConfig config;
 	private static String savedSearchText;
 
-	private static boolean isFullbrightEnabled = false;
+	// private static boolean isFullbrightEnabled = false;
 	public static boolean isEspEnabled = false;
 
 	//keybindings
@@ -107,7 +106,7 @@ public class HoloUtils implements ClientModInitializer, ModMenuApi {
 
 			while(FULLBRIGHT_KEYBIND.wasPressed()){ 
 				SimpleOption<Double> gamma = MinecraftClient.getInstance().options.getGamma();
-				if(!isFullbrightEnabled) {
+				if(!config.visualSettings.getFullbrightState()) {
 					gamma.setValue(15.0);
 					NotifyPlayer.displayMessage("Fullbright ON", true);
 				}
@@ -115,21 +114,14 @@ public class HoloUtils implements ClientModInitializer, ModMenuApi {
 					gamma.setValue(1.0);
 					NotifyPlayer.displayMessage("Fullbright OFF", true);
 				}
-				isFullbrightEnabled = !isFullbrightEnabled;
+				config.visualSettings.setFullbrightState(!config.visualSettings.getFullbrightState());
 			}
 
 			while(XRAY_KEYBIND.wasPressed()) {
-				SimpleOption<Double> gamma = MinecraftClient.getInstance().options.getGamma();
 				if(!XrayUtils.getXrayState()) {
 					NotifyPlayer.displayMessage("Xray ON", true);
-					isFullbrightEnabled = true;
-					gamma.setValue(15.0);
-					config.visualSettings.setAllFogState(FogRemoval.EVERYWHERE);
 				} else {
 					NotifyPlayer.displayMessage("Xray OFF", true);
-					isFullbrightEnabled = false;
-					gamma.setValue(1.0);
-					config.visualSettings.setAllFogState(FogRemoval.DISABLED);
 				}
 				XrayUtils.setXrayState(!XrayUtils.getXrayState());
 			}
