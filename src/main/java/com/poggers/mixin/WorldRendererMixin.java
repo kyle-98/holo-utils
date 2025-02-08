@@ -17,7 +17,6 @@ import me.shedaniel.autoconfig.AutoConfig;
 @Mixin(WorldRenderer.class)
 public abstract class WorldRendererMixin
 {
-	//	changes which color the entitiy should be highlighted in.
 	// @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;getTeamColorValue()I"))
 	// private int forceHighlightColor(Entity entity)
 	// {
