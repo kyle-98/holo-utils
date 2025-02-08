@@ -17,23 +17,23 @@ import me.shedaniel.autoconfig.AutoConfig;
 
 @Mixin(value = Block.class)
 public class BlockMixin {
-    @Inject(at = @At("HEAD"), method = "shouldDrawSide(" + "Lnet/minecraft/block/BlockState;" + 
-            "Lnet/minecraft/world/BlockView;" + 
-            "Lnet/minecraft/util/math/BlockPos;" +
-            "Lnet/minecraft/util/math/Direction;" + 
-            "Lnet/minecraft/util/math/BlockPos;" + 
-            ")Z",
-            cancellable = true)
-    private static void shouldDrawSide(BlockState state, BlockView reader, BlockPos pos, Direction face, BlockPos blockPos, CallbackInfoReturnable<Boolean> ci) {
-        ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
-        if(XrayUtils.getXrayState()){
-            if (config.xraySettings.getXrayBlocks().contains(state.getBlock())) {
-                ci.setReturnValue(true);
-            } else {
-                ci.setReturnValue(false);
-            }
-        }
-    }
+    // @Inject(at = @At("HEAD"), method = "shouldDrawSide(" + "Lnet/minecraft/block/BlockState;" + 
+    //         "Lnet/minecraft/world/BlockView;" + 
+    //         "Lnet/minecraft/util/math/BlockPos;" +
+    //         "Lnet/minecraft/util/math/Direction;" + 
+    //         "Lnet/minecraft/util/math/BlockPos;" + 
+    //         ")Z",
+    //         cancellable = true)
+    // private static void shouldDrawSide(BlockState state, BlockView reader, BlockPos pos, Direction face, BlockPos blockPos, CallbackInfoReturnable<Boolean> ci) {
+    //     ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+    //     if(XrayUtils.getXrayState()){
+    //         if (config.xraySettings.getXrayBlocks().contains(state.getBlock())) {
+    //             ci.setReturnValue(true);
+    //         } else {
+    //             ci.setReturnValue(false);
+    //         }
+    //     }
+    // }
 
     private BlockMixin() {
     }

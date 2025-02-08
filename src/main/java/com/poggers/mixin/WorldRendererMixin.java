@@ -18,18 +18,18 @@ import me.shedaniel.autoconfig.AutoConfig;
 public abstract class WorldRendererMixin
 {
 	//	changes which color the entitiy should be highlighted in.
-	@Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;getTeamColorValue()I"))
-	private int forceHighlightColor(Entity entity)
-	{
-        if(entity instanceof OtherClientPlayerEntity || entity instanceof ClientPlayerEntity){
-            ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
-            Friend eF = config.espSettings.getEspFriendByName(entity.getName().getLiteralString());
-            if (config.espSettings.shouldRenderEspFriend(eF.name)){
-                return ColorUtils.parseHexColor(eF.color);
-            } else {
-                return 0xFFFFFF;
-            }
-        }
-		return 0xFFFFFF;
-	}
+	// @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;getTeamColorValue()I"))
+	// private int forceHighlightColor(Entity entity)
+	// {
+    //     if(entity instanceof OtherClientPlayerEntity || entity instanceof ClientPlayerEntity){
+    //         ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+    //         Friend eF = config.espSettings.getEspFriendByName(entity.getName().getLiteralString());
+    //         if (config.espSettings.shouldRenderEspFriend(eF.name)){
+    //             return ColorUtils.parseHexColor(eF.color);
+    //         } else {
+    //             return 0xFFFFFF;
+    //         }
+    //     }
+	// 	return 0xFFFFFF;
+	// }
 }

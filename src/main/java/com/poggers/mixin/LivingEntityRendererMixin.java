@@ -15,18 +15,18 @@ import me.shedaniel.autoconfig.AutoConfig;
 @Mixin(LivingEntityRenderer.class)
 public class LivingEntityRendererMixin
 {
-	@Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;hasOutline(Lnet/minecraft/entity/Entity;)Z"))
-	public boolean forceHighlight(MinecraftClient client, Entity entity) {
-		if(entity instanceof ClientPlayerEntity || entity instanceof OtherClientPlayerEntity) {
-			ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
-			Friend eF = config.espSettings.getEspFriendByName(entity.getName().getLiteralString());
-			if(eF != null && eF.enabled) {
-				return true;
-			} else {
-				return false;
-			}
-        } else {
-            return client.hasOutline(entity);
-        }
-	}
+	// @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;hasOutline(Lnet/minecraft/entity/Entity;)Z"))
+	// public boolean forceHighlight(MinecraftClient client, Entity entity) {
+	// 	if(entity instanceof ClientPlayerEntity || entity instanceof OtherClientPlayerEntity) {
+	// 		ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+	// 		Friend eF = config.espSettings.getEspFriendByName(entity.getName().getLiteralString());
+	// 		if(eF != null && eF.enabled) {
+	// 			return true;
+	// 		} else {
+	// 			return false;
+	// 		}
+    //     } else {
+    //         return client.hasOutline(entity);
+    //     }
+	// }
 }

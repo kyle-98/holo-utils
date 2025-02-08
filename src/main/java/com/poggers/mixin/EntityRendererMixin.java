@@ -21,43 +21,43 @@ import me.shedaniel.autoconfig.AutoConfig;
 @Mixin(EntityRenderer.class)
 public class EntityRendererMixin
 {
-    @SuppressWarnings("unused")
-    private Entity currentEntity;
+    // @SuppressWarnings("unused")
+    // private Entity currentEntity;
 
-    @Inject(method = "renderLabelIfPresent", at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
-    private void captureEntity(Entity entity, Text text, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, float tickDelta, CallbackInfo ci) {
-        if(entity instanceof ClientPlayerEntity || entity instanceof OtherClientPlayerEntity) {
-            this.currentEntity = entity;
-        }
-    }
+    // @Inject(method = "renderLabelIfPresent", at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
+    // private void captureEntity(Entity entity, Text text, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, float tickDelta, CallbackInfo ci) {
+    //     if(entity instanceof ClientPlayerEntity || entity instanceof OtherClientPlayerEntity) {
+    //         this.currentEntity = entity;
+    //     }
+    // }
 
-    @SuppressWarnings("rawtypes")
-    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/EntityRenderer;hasLabel(Lnet/minecraft/entity/Entity;)Z"))
-    public boolean renderNameTag(EntityRenderer renderer, Entity entity) {
-        ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
-        if(entity instanceof ClientPlayerEntity || entity instanceof OtherClientPlayerEntity) {
-            if (config.espSettings.shouldRenderEspFriend(entity.getName().getLiteralString())){
-                return true;
-            } else {
-                if(entity instanceof ClientPlayerEntity){
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-        } else {
-            return false;
-        }
-    }
+    // @SuppressWarnings("rawtypes")
+    // @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/EntityRenderer;hasLabel(Lnet/minecraft/entity/Entity;)Z"))
+    // public boolean renderNameTag(EntityRenderer renderer, Entity entity) {
+    //     ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+    //     if(entity instanceof ClientPlayerEntity || entity instanceof OtherClientPlayerEntity) {
+    //         if (config.espSettings.shouldRenderEspFriend(entity.getName().getLiteralString())){
+    //             return true;
+    //         } else {
+    //             if(entity instanceof ClientPlayerEntity){
+    //                 return false;
+    //             } else {
+    //                 return true;
+    //             }
+    //         }
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
-    @Redirect(method = "renderLabelIfPresent", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;isSneaky()Z"))
-    private boolean redirectIsSneaky(Entity entity) {
-        ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
-        if(config.espSettings.shouldRenderEspFriend(entity.getName().getLiteralString()))
-        {
-            return false;
-        }
-        return entity.isSneaky();
-    }
+    // @Redirect(method = "renderLabelIfPresent", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;isSneaky()Z"))
+    // private boolean redirectIsSneaky(Entity entity) {
+    //     ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+    //     if(config.espSettings.shouldRenderEspFriend(entity.getName().getLiteralString()))
+    //     {
+    //         return false;
+    //     }
+    //     return entity.isSneaky();
+    // }
 
 }
