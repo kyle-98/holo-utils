@@ -3,6 +3,7 @@ package com.poggers.config;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.poggers.utils.CapeManager;
 import com.poggers.utils.NotifyPlayer;
 
 import me.shedaniel.autoconfig.AutoConfig;
@@ -163,6 +164,25 @@ public class ModConfig implements ConfigData {
             return blocksToRender;
         }
     }
+
+    @Category("capes")
+    @TransitiveObject
+    public CapesSettings capesSettings = new CapesSettings();
+
+    public class CapesSettings {
+        private String capePath = "";
+
+        public String getCapePath() {
+            return this.capePath;
+        }
+
+        public void setCapePath(String path) {
+            this.capePath = path;
+            CapeManager.reloadCapeTexture(path);
+            System.out.println(path);
+        }
+    }
+
 
     public void cycleFogOptions(){
         switch(this.visualSettings.getAllFogState()) {

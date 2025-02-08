@@ -13,7 +13,9 @@
 		"LivingEntityRendererMixin",
 		"EntityRendererMixin",
 		"MinecraftClientMixin",
-		"WorldRendererMixin"
+		"WorldRendererMixin",
+		"PlayerListHudMixin",
+		"AbstractClientPlayerEntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
