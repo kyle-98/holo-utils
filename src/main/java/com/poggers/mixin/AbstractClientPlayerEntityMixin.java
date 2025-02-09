@@ -27,14 +27,25 @@ public class AbstractClientPlayerEntityMixin {
         if(player.getUuid().equals(cpe.getUuid())){
             CapeManager.reloadCapeTexture(config.capesSettings.getCapePath());
             var current = cir.getReturnValue();
-            cir.setReturnValue(new SkinTextures(
-                    current.texture(),     
-                    current.textureUrl(), 
-                    CapeManager.getCapeTexture(),             
-                    current.elytraTexture(),
-                    current.model(),
-                    current.secure()
-            ));
+            if(CapeManager.getCapeTexture() == null){
+                cir.setReturnValue(new SkinTextures(
+                        current.texture(),     
+                        current.textureUrl(), 
+                        current.capeTexture(),             
+                        current.elytraTexture(),
+                        current.model(),
+                        current.secure()
+                ));
+            } else {
+                cir.setReturnValue(new SkinTextures(
+                        current.texture(),     
+                        current.textureUrl(), 
+                        CapeManager.getCapeTexture(),             
+                        current.elytraTexture(),
+                        current.model(),
+                        current.secure()
+                ));
+            }
         }
 
     }

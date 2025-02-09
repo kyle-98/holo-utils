@@ -11,21 +11,21 @@ import net.minecraft.util.Identifier;
 
 public class CapeManager {
     private static Identifier currentCapeID = null;
-    private static String lastCapePath = null;
 
     public static Identifier getCapeTexture() {
         return currentCapeID;
     }
 
     public static void reloadCapeTexture(String filePath) {
-        if (filePath == null || filePath.isEmpty() || filePath.equals(lastCapePath)) {
-            return; // Skip if no file is set or the same file is selected again
+        if (filePath == null || filePath.isEmpty()) {
+            currentCapeID = null;
+            return;
         }
 
-        lastCapePath = filePath;
         File file = new File(filePath);
         if (!file.exists()) {
-            System.out.println("Cape file not found: " + filePath);
+            // System.out.println("Cape file not found: " + filePath);
+            currentCapeID = null;
             return;
         }
 
