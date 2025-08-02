@@ -24,7 +24,6 @@ public class CapeManager {
 
         File file = new File(filePath);
         if (!file.exists()) {
-            // System.out.println("Cape file not found: " + filePath);
             currentCapeID = null;
             return;
         }

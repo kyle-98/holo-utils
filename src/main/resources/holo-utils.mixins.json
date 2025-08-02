@@ -10,8 +10,6 @@
 		"OverrideIllegalMixin",
 		"BlockMixin",
 		"AbstractBlockMixin",
-		"LivingEntityRendererMixin",
-		"EntityRendererMixin",
 		"MinecraftClientMixin",
 		"WorldRendererMixin",
 		"PlayerListHudMixin",

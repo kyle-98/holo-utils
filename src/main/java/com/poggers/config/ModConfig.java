@@ -179,7 +179,6 @@ public class ModConfig implements ConfigData {
         public void setCapePath(String path) {
             this.capePath = path;
             CapeManager.reloadCapeTexture(path);
-            System.out.println(path);
         }
     }
 
