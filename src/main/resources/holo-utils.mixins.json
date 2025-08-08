@@ -7,13 +7,7 @@
 		"ScreenAccessor",
 		"HandledScreenAccessor",
 		"BackgroundRendererMixin",
-		"OverrideIllegalMixin",
-		"BlockMixin",
-		"AbstractBlockMixin",
-		"MinecraftClientMixin",
-		"WorldRendererMixin",
-		"PlayerListHudMixin",
-		"AbstractClientPlayerEntityMixin"
+		"OverrideIllegalMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
