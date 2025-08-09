@@ -18,6 +18,8 @@
     "text.autoconfig.holo-utils.option.Friend.name": "Player Name",
     "text.autoconfig.holo-utils.option.Friend.color": "ESP Color",
     "text.autoconfig.holo-utils.option.Friend.enabled": "Is Enabled",
+    "text.autoconfig.holo-utils.category.capes": "Cape Settings",
+    "text.autoconfig.holo-utils.option.capesSettings.capePath": "Cape Texture Path",
 
     "key.holo-utils.cycleFog": "Cycle Fog Rendering",
     "key.holo-utils.fullBright": "Toggle Fullbright",
