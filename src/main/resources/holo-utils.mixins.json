@@ -13,7 +13,9 @@
 		"MinecraftClientMixin",
 		"WorldRendererMixin",
 		"PlayerListHudMixin",
-		"AbstractClientPlayerEntityMixin"
+		"AbstractClientPlayerEntityMixin",
+		"SkyRenderingAccessor",
+		"SkyRenderingMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
