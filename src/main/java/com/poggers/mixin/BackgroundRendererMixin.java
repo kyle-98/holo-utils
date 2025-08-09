@@ -24,7 +24,6 @@ public class BackgroundRendererMixin {
     private static float fogStart = 1000.0F;
     private static float fogEnd = 1000.0F;
 
-
     @Inject(method = "applyFog", at = @At(value = "HEAD"), cancellable = true)
     private static void applyCustomFog(Camera camera, BackgroundRenderer.FogType fogType, Vector4f color, float viewDistance, boolean thickenFog, float tickDelta, CallbackInfoReturnable<Fog> cir) {
         MinecraftClient client = MinecraftClient.getInstance();

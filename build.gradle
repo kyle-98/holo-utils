@@ -21,14 +21,25 @@ repositories {
 		url = "https://maven.terraformersmc.com/"
 	}
 	mavenCentral()
-    maven { url 'https://modrinth.com' }
-	maven { url "https://maven.shedaniel.me/" }
-    maven { url "https://maven.terraformersmc.com/releases/" }
+	maven {
+		name = "Modrinth"
+		url = "https://modrinth.com"
+	}
+	maven {
+		name = "Shedaniel"
+		url = "https://maven.shedaniel.me/"
+	}
+	maven {
+		name = "Terraformers Releases"
+		url = "https://maven.terraformersmc.com/releases/"
+	}
 }
 
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+
+	// mappings 
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
