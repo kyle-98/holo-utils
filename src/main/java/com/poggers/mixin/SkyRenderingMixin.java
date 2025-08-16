@@ -7,8 +7,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import com.mojang.blaze3d.buffers.BufferType;
-import com.mojang.blaze3d.buffers.BufferUsage;
 import com.mojang.blaze3d.buffers.GpuBuffer;
 import com.mojang.blaze3d.systems.GpuDevice;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -26,18 +24,18 @@ public abstract class SkyRenderingMixin implements SkyRenderingAccessor{
         method = "<init>",
         at = @At(
             value = "INVOKE",
-            target = "Lcom/mojang/blaze3d/systems/GpuDevice;createBuffer(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/buffers/BufferType;Lcom/mojang/blaze3d/buffers/BufferUsage;Ljava/nio/ByteBuffer;)Lcom/mojang/blaze3d/buffers/GpuBuffer;",
+            target = "Lcom/mojang/blaze3d/systems/GpuDevice;createBuffer(Ljava/util/function/Supplier;ILjava/nio/ByteBuffer;)Lcom/mojang/blaze3d/buffers/GpuBuffer;",
             ordinal = 0
         )
     )
-    private GpuBuffer redirectTopSkyBuffer(GpuDevice device, Supplier<String> labelGetter, BufferType type, BufferUsage usage, ByteBuffer source) {
+    private GpuBuffer redirectTopSkyBuffer(GpuDevice device, Supplier<String> labelGetter, int usage, ByteBuffer data) {
         SkyRenderingAccessor self = (SkyRenderingAccessor) (Object) this;
         try (BufferAllocator bufferAllocator = new BufferAllocator(10 * VertexFormats.POSITION.getVertexSize())) {
             BufferBuilder bufferBuilder = new BufferBuilder(bufferAllocator, VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION);
             self.invokeCreateSky(bufferBuilder, -1000.0F);
             try (BuiltBuffer builtBuffer = bufferBuilder.end()) {
                 return RenderSystem.getDevice()
-                    .createBuffer(() -> "Top sky vertex buffer", BufferType.VERTICES, BufferUsage.STATIC_WRITE, builtBuffer.getBuffer());
+                    .createBuffer(() -> "Top sky vertex buffer", 32, builtBuffer.getBuffer());
             }
         }
     }
@@ -46,18 +44,18 @@ public abstract class SkyRenderingMixin implements SkyRenderingAccessor{
         method = "<init>",
         at = @At(
             value = "INVOKE",
-            target = "Lcom/mojang/blaze3d/systems/GpuDevice;createBuffer(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/buffers/BufferType;Lcom/mojang/blaze3d/buffers/BufferUsage;Ljava/nio/ByteBuffer;)Lcom/mojang/blaze3d/buffers/GpuBuffer;",
+            target = "Lcom/mojang/blaze3d/systems/GpuDevice;createBuffer(Ljava/util/function/Supplier;ILjava/nio/ByteBuffer;)Lcom/mojang/blaze3d/buffers/GpuBuffer;",
             ordinal = 1
         )
     )
-    private GpuBuffer redirectBottomSkyBuffer(GpuDevice device, Supplier<String> labelGetter, BufferType type, BufferUsage usage, ByteBuffer source) {
+    private GpuBuffer redirectBottomSkyBuffer(GpuDevice device, Supplier<String> labelGetter, int usage, ByteBuffer data) {
         SkyRenderingAccessor self = (SkyRenderingAccessor) (Object) this;
         try (BufferAllocator bufferAllocator = new BufferAllocator(10 * VertexFormats.POSITION.getVertexSize())) {
             BufferBuilder bufferBuilder = new BufferBuilder(bufferAllocator, VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION);
             self.invokeCreateSky(bufferBuilder, -1000.0F);
             try (BuiltBuffer builtBuffer = bufferBuilder.end()) {
                 return RenderSystem.getDevice()
-                    .createBuffer(() -> "Bottom sky vertex buffer", BufferType.VERTICES, BufferUsage.STATIC_WRITE, builtBuffer.getBuffer());
+                    .createBuffer(() -> "Bottom sky vertex buffer", 32, builtBuffer.getBuffer());
             }
         }
     }

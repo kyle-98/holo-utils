@@ -3,10 +3,10 @@
 	"package": "com.poggers.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"BackgroundRendererMixin",
 		"OverrideIllegalMixin",
 		"SkyRenderingMixin",
-		"SkyRenderingAccessor"
+		"SkyRenderingAccessor",
+		"FogRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
