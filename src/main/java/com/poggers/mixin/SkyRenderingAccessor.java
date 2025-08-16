@@ -8,6 +8,6 @@ import net.minecraft.client.render.VertexConsumer;
 
 @Mixin(SkyRendering.class)
 public interface SkyRenderingAccessor {
-    @Invoker("tessellateSky")
-    void invokeTessellateSky(VertexConsumer vertexConsumer, float height);
+    @Invoker("createSky")
+    void invokeCreateSky(VertexConsumer vertexConsumer, float height);
 }

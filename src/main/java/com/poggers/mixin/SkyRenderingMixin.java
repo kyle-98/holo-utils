@@ -1,12 +1,24 @@
 package com.poggers.mixin;
 
+import java.nio.ByteBuffer;
+import java.util.function.Supplier;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import net.minecraft.client.gl.VertexBuffer;
+
+import com.mojang.blaze3d.buffers.BufferType;
+import com.mojang.blaze3d.buffers.BufferUsage;
+import com.mojang.blaze3d.buffers.GpuBuffer;
+import com.mojang.blaze3d.systems.GpuDevice;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.VertexFormat;
+
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.BuiltBuffer;
 import net.minecraft.client.render.SkyRendering;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexFormat;
+import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.util.BufferAllocator;
 
 @Mixin(SkyRendering.class)
 public abstract class SkyRenderingMixin implements SkyRenderingAccessor{
@@ -14,30 +26,39 @@ public abstract class SkyRenderingMixin implements SkyRenderingAccessor{
         method = "<init>",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/client/gl/VertexBuffer;createAndUpload(Lnet/minecraft/client/render/VertexFormat$DrawMode;Lnet/minecraft/client/render/VertexFormat;Ljava/util/function/Consumer;)Lnet/minecraft/client/gl/VertexBuffer;",
-            ordinal = 1
+            target = "Lcom/mojang/blaze3d/systems/GpuDevice;createBuffer(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/buffers/BufferType;Lcom/mojang/blaze3d/buffers/BufferUsage;Ljava/nio/ByteBuffer;)Lcom/mojang/blaze3d/buffers/GpuBuffer;",
+            ordinal = 0
         )
     )
-    private VertexBuffer redirectSkyBufferCreateAndUpload(VertexFormat.DrawMode mode, VertexFormat format, java.util.function.Consumer<VertexConsumer> consumer) {
-        SkyRenderingAccessor self = (SkyRenderingAccessor)(Object)this;
-        return VertexBuffer.createAndUpload(mode, format, (vertexConsumer) -> {
-            self.invokeTessellateSky(vertexConsumer, -1000.0F);
-        });
+    private GpuBuffer redirectTopSkyBuffer(GpuDevice device, Supplier<String> labelGetter, BufferType type, BufferUsage usage, ByteBuffer source) {
+        SkyRenderingAccessor self = (SkyRenderingAccessor) (Object) this;
+        try (BufferAllocator bufferAllocator = new BufferAllocator(10 * VertexFormats.POSITION.getVertexSize())) {
+            BufferBuilder bufferBuilder = new BufferBuilder(bufferAllocator, VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION);
+            self.invokeCreateSky(bufferBuilder, -1000.0F);
+            try (BuiltBuffer builtBuffer = bufferBuilder.end()) {
+                return RenderSystem.getDevice()
+                    .createBuffer(() -> "Top sky vertex buffer", BufferType.VERTICES, BufferUsage.STATIC_WRITE, builtBuffer.getBuffer());
+            }
+        }
     }
 
     @Redirect(
         method = "<init>",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/client/gl/VertexBuffer;createAndUpload(Lnet/minecraft/client/render/VertexFormat$DrawMode;Lnet/minecraft/client/render/VertexFormat;Ljava/util/function/Consumer;)Lnet/minecraft/client/gl/VertexBuffer;",
-            ordinal = 2
+            target = "Lcom/mojang/blaze3d/systems/GpuDevice;createBuffer(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/buffers/BufferType;Lcom/mojang/blaze3d/buffers/BufferUsage;Ljava/nio/ByteBuffer;)Lcom/mojang/blaze3d/buffers/GpuBuffer;",
+            ordinal = 1
         )
     )
-    private VertexBuffer redirectDarkSkyBufferCreateAndUpload(VertexFormat.DrawMode mode, VertexFormat format, java.util.function.Consumer<VertexConsumer> consumer) {
-        SkyRenderingAccessor self = (SkyRenderingAccessor)(Object)this;
-        return VertexBuffer.createAndUpload(mode, format, (vertexConsumer) -> {
-            self.invokeTessellateSky(vertexConsumer, -1000.0F);
-        });
+    private GpuBuffer redirectBottomSkyBuffer(GpuDevice device, Supplier<String> labelGetter, BufferType type, BufferUsage usage, ByteBuffer source) {
+        SkyRenderingAccessor self = (SkyRenderingAccessor) (Object) this;
+        try (BufferAllocator bufferAllocator = new BufferAllocator(10 * VertexFormats.POSITION.getVertexSize())) {
+            BufferBuilder bufferBuilder = new BufferBuilder(bufferAllocator, VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION);
+            self.invokeCreateSky(bufferBuilder, -1000.0F);
+            try (BuiltBuffer builtBuffer = bufferBuilder.end()) {
+                return RenderSystem.getDevice()
+                    .createBuffer(() -> "Bottom sky vertex buffer", BufferType.VERTICES, BufferUsage.STATIC_WRITE, builtBuffer.getBuffer());
+            }
+        }
     }
-
 }
