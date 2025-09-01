@@ -1,5 +1,10 @@
 # holo-utils
  A minecraft "utility" mod.
+
+ ## Current Downloads
+_This is the download count for the No Fog + Fullbright (Lite) verison of this mod as the full mod is not allowed on modrinth_
+
+  ![Modrinth Downloads](https://img.shields.io/modrinth/dt/no-fog-+-fullbright)
  
  <img src="https://github.com/user-attachments/assets/1dab24d5-bae8-4d5f-bd89-c2ee6e511e6a" height="100px" width="70px" content-align="center">
 
