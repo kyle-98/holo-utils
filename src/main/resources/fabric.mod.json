@@ -19,7 +19,7 @@
 			"com.poggers.HoloUtils"
 		],
 		"modmenu": [
-			"com.poggers.config.ModMenuIntegration"
+			"com.poggers.config.holoutils.ModMenuIntegration"
 		]
 	},
 	"mixins": [

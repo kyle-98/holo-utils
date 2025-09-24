@@ -1,4 +1,4 @@
-package com.poggers.config;
+package com.poggers.config.holoutils;
 
 import com.poggers.utils.NotifyPlayer;
 

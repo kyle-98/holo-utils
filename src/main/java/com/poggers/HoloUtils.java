@@ -1,7 +1,7 @@
 package com.poggers;
 
 import com.poggers.utils.NotifyPlayer;
-import com.poggers.config.ModConfig;
+import com.poggers.config.holoutils.ModConfig;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 
 import me.shedaniel.autoconfig.AutoConfig;
