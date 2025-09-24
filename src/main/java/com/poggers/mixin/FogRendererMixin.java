@@ -7,8 +7,8 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.poggers.config.ModConfig;
-import com.poggers.config.ModConfig.FogRemoval;
+import com.poggers.config.holoutils.ModConfig;
+import com.poggers.config.holoutils.ModConfig.FogRemoval;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.MinecraftClient;
