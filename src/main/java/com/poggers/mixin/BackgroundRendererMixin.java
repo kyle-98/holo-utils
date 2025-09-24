@@ -14,8 +14,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.poggers.config.ModConfig;
-import com.poggers.config.ModConfig.FogRemoval;
+import com.poggers.config.holoutils.ModConfig;
+import com.poggers.config.holoutils.ModConfig.FogRemoval;
 
 import me.shedaniel.autoconfig.AutoConfig;
 
