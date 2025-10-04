@@ -14,7 +14,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.option.SimpleOption;
-import net.minecraft.client.util.InputUtil;
+import net.minecraft.util.Identifier;
+
 import org.lwjgl.glfw.GLFW;
 
 public class HoloUtils implements ClientModInitializer, ModMenuApi {
@@ -22,13 +23,11 @@ public class HoloUtils implements ClientModInitializer, ModMenuApi {
 	private static ConfigHolder<ModConfig> configHolder;
 	public ModConfig config;
 
-	public static boolean isEspEnabled = false;
-
 	//keybindings
 	public static KeyBinding CYCLE_FOG_KEYBIND;
 	public static KeyBinding FULLBRIGHT_KEYBIND;
-	public static KeyBinding XRAY_KEYBIND;
-	public static KeyBinding ESP_KEYBIND;
+
+	private static KeyBinding.Category keybindCategory = KeyBinding.Category.create(Identifier.of("holo-utils", "keybindings"));
 
 	public static ModConfig getConfig() {
 		return configHolder.getConfig();
@@ -41,19 +40,8 @@ public class HoloUtils implements ClientModInitializer, ModMenuApi {
 	@Override
 	public void onInitializeClient() {
 
-		CYCLE_FOG_KEYBIND = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-			"key.holo-utils.cycleFog",
-			InputUtil.Type.KEYSYM,
-			GLFW.GLFW_KEY_U,
-			"category.holo-utils"
-		));
-
-		FULLBRIGHT_KEYBIND = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-			"key.holo-utils.fullBright",
-			InputUtil.Type.KEYSYM,
-			GLFW.GLFW_KEY_N,
-			"category.holo-utils"
-		));
+		CYCLE_FOG_KEYBIND = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.holo-utils.cycleFog", GLFW.GLFW_KEY_U, keybindCategory));
+		FULLBRIGHT_KEYBIND = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.holo-utils.fullBright", GLFW.GLFW_KEY_N, keybindCategory));
 
 		configHolder = AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
 		config = getConfig();
