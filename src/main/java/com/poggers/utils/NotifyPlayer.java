@@ -1,13 +1,13 @@
 package com.poggers.utils;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.Text;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 
 public class NotifyPlayer {
     public static void displayMessage(String message, boolean aboveHotBar){
-        MinecraftClient client = MinecraftClient.getInstance();
-        assert client.player != null;
-
-        client.player.sendMessage(Text.literal(message), aboveHotBar);
+        Minecraft mc = Minecraft.getInstance();
+        assert mc.player != null;
+        mc.gui.setOverlayMessage(Component.literal(message).withStyle(ChatFormatting.WHITE), aboveHotBar);
     }
 }
