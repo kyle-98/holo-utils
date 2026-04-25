@@ -6,7 +6,7 @@
     "text.autoconfig.holo-utils.option.visualSettings.removeFogEverywhere": "Fog Rendering",
     "text.autoconfig.holo-utils.option.visualSettings.fullbrightEnabled": "Full Bright",
 
-    "key.holo-utils.cycleFog": "Cycle Fog Rendering",
-    "key.holo-utils.fullBright": "Toggle Fullbright",
+    "key.holo-utils-cycleFog": "Cycle Fog Rendering",
+    "key.holo-utils-fullBright": "Toggle Fullbright",
     "key.category.holo-utils.keybindings": "Holo-Utils (Fullbright + No Fog)"
 }
