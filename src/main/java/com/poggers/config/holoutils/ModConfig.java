@@ -40,7 +40,6 @@ public class ModConfig implements ConfigData {
 
         public void setFullbrightState(boolean state) {
             this.fullbrightEnabled = state;
-            AutoConfig.getConfigHolder(ModConfig.class).save();
         }
     }
 
