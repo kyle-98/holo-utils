@@ -31,5 +31,6 @@
 		"java": ">=21",
 		"fabric-api": "*",
 		"cloth-config": ">=16.0.0"
-	}
+	},
+	"accessWidener": "holo-utils.accesswidener"
 }
