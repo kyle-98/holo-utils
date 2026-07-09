@@ -8,6 +8,6 @@ public class NotifyPlayer {
     public static void displayMessage(String message, boolean aboveHotBar){
         Minecraft mc = Minecraft.getInstance();
         assert mc.player != null;
-        mc.gui.setOverlayMessage(Component.literal(message).withStyle(ChatFormatting.WHITE), aboveHotBar);
+        mc.gui.hud.setOverlayMessage(Component.literal(message).withStyle(ChatFormatting.WHITE), aboveHotBar);
     }
 }
